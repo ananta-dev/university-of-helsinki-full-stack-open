@@ -8,7 +8,9 @@ Add here anything you want to remember about the course's submissions.
 Go here for submissions:
 https://studies.cs.helsinki.fi/stats/courses/fullstackopen/submissions
 
-Recommendation from https://fullstackopen.com/en/part0/fundamentals_of_web_apps
+=====
+
+Recommendation from https://fullstackopen.com/en/part0/fundamentals_of_web_apps:
 
 Exercises 0.1.-0.6.
 ===================
