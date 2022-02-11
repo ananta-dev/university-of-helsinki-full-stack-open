@@ -28,16 +28,6 @@ const Total = props => {
 };
 
 const App = () => {
-    // Playing with the "this" object
-    const arto = {
-        fullname: "Arto Dito",
-        greet: function () {
-            console.log("hello, my name is " + this.fullname);
-        },
-    };
-    const referenceToGreet = arto.greet.bind(arto);
-    referenceToGreet();
-
     const course = {
         name: "Half Stack application development",
         parts: [
