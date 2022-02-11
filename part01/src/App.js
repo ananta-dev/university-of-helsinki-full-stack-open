@@ -9,7 +9,7 @@ const Part = props => (
 const Content = props => (
     <>
         {props.courseParts.map(part => (
-            <Part name={part.name} exercises={part.exercises} />
+            <Part key={part.id} name={part.name} exercises={part.exercises} />
         ))}
     </>
 );
@@ -28,18 +28,31 @@ const Total = props => {
 };
 
 const App = () => {
+    // Playing with the "this" object
+    const arto = {
+        fullname: "Arto Dito",
+        greet: function () {
+            console.log("hello, my name is " + this.fullname);
+        },
+    };
+    const referenceToGreet = arto.greet.bind(arto);
+    referenceToGreet();
+
     const course = {
         name: "Half Stack application development",
         parts: [
             {
+                id: 1,
                 name: "Fundamentals of React",
                 exercises: 10,
             },
             {
+                id: 2,
                 name: "Using props to pass data",
                 exercises: 7,
             },
             {
+                id: 3,
                 name: "State of a component",
                 exercises: 14,
             },
