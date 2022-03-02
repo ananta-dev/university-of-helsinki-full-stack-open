@@ -21,7 +21,11 @@ const App = () => {
     };
 
     const setRandomSelection = () => {
-        setSelected(Math.floor(Math.random() * anecdotes.length));
+        let newlySelected = Math.floor(Math.random() * (anecdotes.length - 1));
+        if (newlySelected >= selected) {
+            newlySelected++;
+        }
+        setSelected(newlySelected);
     };
 
     return (
