@@ -23,9 +23,9 @@ const App = () => {
     return (
         <div>
             <h1>give feedback</h1>
-            <Button clickFunction={increaseGood} text='good' />
-            <Button clickFunction={increaseNeutral} text='neutral' />
-            <Button clickFunction={increaseBad} text='bad' />
+            <Button actionFunction={increaseGood} text='good' />
+            <Button actionFunction={increaseNeutral} text='neutral' />
+            <Button actionFunction={increaseBad} text='bad' />
             {good + neutral + bad > 0 && (
                 <Statistics good={good} neutral={neutral} bad={bad} />
             )}

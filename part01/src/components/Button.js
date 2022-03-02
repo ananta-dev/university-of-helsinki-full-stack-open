@@ -1,7 +1,7 @@
 export const Button = props => {
     return (
         <>
-            <button onClick={props.clickFunction}> {props.text}</button>;
+            <button onClick={props.actionFunction}> {props.text}</button>;
         </>
     );
 };
