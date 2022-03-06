@@ -4,6 +4,7 @@ import Filter from "./components/Filter";
 const AddPersonForm = ({
     persons,
     setPersons,
+    setPersonsToShow,
     resetPersonsToShow,
     personsToShow,
     justToDebug,
@@ -31,13 +32,17 @@ const AddPersonForm = ({
                 },
             ];
 
+            console.log("newPersonsArray", newPersonsArray);
+
             setPersons(newPersonsArray);
 
-            justToDebug();
+            // justToDebug();
 
+            console.log("I just called setPersons with the newPersonsArray");
             console.log("added to persons - persons: ", persons);
             console.log("added to persons - personsToShow: ", personsToShow);
 
+            // setPersonsToShow(newPersonsArray);
             resetPersonsToShow();
             console.log("called resetPersonsToShow - persons: ", persons);
             console.log(
@@ -140,6 +145,8 @@ const App = () => {
     };
 
     console.log("First console log of the App function");
+    console.log("at this point persons is: ", persons);
+    console.log("at this point personsToShow is: ", personsToShow);
 
     return (
         <div>
@@ -148,6 +155,7 @@ const App = () => {
             <AddPersonForm
                 persons={persons}
                 setPersons={setPersons}
+                setPersonsToShow={setPersonsToShow}
                 resetPersonsToShow={resetPersonsToShow}
                 personsToShow={personsToShow}
                 justToDebug={justToDebug}
