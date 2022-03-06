@@ -1,8 +1,9 @@
-import { useState } from "react";
-
-const Filter = ({ setPersonsToShow, persons }) => {
-    const [filter, setFilter] = useState("");
-
+const Filter = ({
+    filterString,
+    setFilterString,
+    setPersonsToShow,
+    persons,
+}) => {
     const handleFilterChange = e => {
         const newFilter = e.target.value;
         if (newFilter === "") {
@@ -14,13 +15,13 @@ const Filter = ({ setPersonsToShow, persons }) => {
                 )
             );
         }
-        setFilter(newFilter);
+        setFilterString(newFilter);
     };
 
     return (
         <div>
             filter shown with{" "}
-            <input onChange={handleFilterChange} value={filter} />
+            <input onChange={handleFilterChange} value={filterString} />
         </div>
     );
 };

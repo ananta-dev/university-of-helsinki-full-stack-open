@@ -1,7 +1,12 @@
 import { useState } from "react";
 import Filter from "./components/Filter";
 
-const AddPersonForm = ({ persons, setPersons, setPersonsToShow }) => {
+const AddPersonForm = ({
+    persons,
+    setPersons,
+    setPersonsToShow,
+    setFilterString,
+}) => {
     const NAME_PLACEHOLDER_TEXT = "Enter name here...";
     const NUMBER_PLACEHOLDER_TEXT = "Enter phone number here...";
 
@@ -26,6 +31,7 @@ const AddPersonForm = ({ persons, setPersons, setPersonsToShow }) => {
             ];
             setPersons(newPersonsArray);
             setPersonsToShow(newPersonsArray);
+            setFilterString("");
         }
     };
 
@@ -98,6 +104,7 @@ const App = () => {
         { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
     ]);
     const [personsToShow, setPersonsToShow] = useState(persons);
+    const [filterString, setFilterString] = useState("");
 
     const resetPersonsToShow = () => {
         setPersonsToShow(persons);
@@ -106,13 +113,17 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
-            <Filter persons={persons} setPersonsToShow={setPersonsToShow} />
+            <Filter
+                filterString={filterString}
+                setFilterString={setFilterString}
+                persons={persons}
+                setPersonsToShow={setPersonsToShow}
+            />
             <AddPersonForm
                 persons={persons}
                 setPersons={setPersons}
                 setPersonsToShow={setPersonsToShow}
-                resetPersonsToShow={resetPersonsToShow}
-                personsToShow={personsToShow}
+                setFilterString={setFilterString}
             />
             <ListAllPeople personsToShow={personsToShow} />
         </div>
