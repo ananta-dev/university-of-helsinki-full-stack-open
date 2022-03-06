@@ -1,14 +1,7 @@
 import { useState } from "react";
 import Filter from "./components/Filter";
 
-const AddPersonForm = ({
-    persons,
-    setPersons,
-    setPersonsToShow,
-    resetPersonsToShow,
-    personsToShow,
-    justToDebug,
-}) => {
+const AddPersonForm = ({ persons, setPersons, setPersonsToShow }) => {
     const NAME_PLACEHOLDER_TEXT = "Enter name here...";
     const NUMBER_PLACEHOLDER_TEXT = "Enter phone number here...";
 
@@ -31,24 +24,8 @@ const AddPersonForm = ({
                     id: 1000 + Math.floor(Math.random() * 1000000),
                 },
             ];
-
-            console.log("newPersonsArray", newPersonsArray);
-
             setPersons(newPersonsArray);
-
-            // justToDebug();
-
-            console.log("I just called setPersons with the newPersonsArray");
-            console.log("added to persons - persons: ", persons);
-            console.log("added to persons - personsToShow: ", personsToShow);
-
-            // setPersonsToShow(newPersonsArray);
-            resetPersonsToShow();
-            console.log("called resetPersonsToShow - persons: ", persons);
-            console.log(
-                "called resetPersonsToShow - personsToShow: ",
-                personsToShow
-            );
+            setPersonsToShow(newPersonsArray);
         }
     };
 
@@ -123,30 +100,8 @@ const App = () => {
     const [personsToShow, setPersonsToShow] = useState(persons);
 
     const resetPersonsToShow = () => {
-        console.log("inside resetPersonsToShow() --- persons: ", persons);
-        console.log(
-            "inside resetPersonsToShow() --- personsToShow: ",
-            personsToShow
-        );
-
         setPersonsToShow(persons);
-        console.log(
-            "inside resetPersonsToShow() after calling setPersonsToShow --- persons: ",
-            persons
-        );
-        console.log(
-            "inside resetPersonsToShow() after calling setPersonsToShow --- personsToShow: ",
-            personsToShow
-        );
     };
-
-    const justToDebug = () => {
-        console.log("i am in justToDebug - persons: ", persons);
-    };
-
-    console.log("First console log of the App function");
-    console.log("at this point persons is: ", persons);
-    console.log("at this point personsToShow is: ", personsToShow);
 
     return (
         <div>
@@ -158,7 +113,6 @@ const App = () => {
                 setPersonsToShow={setPersonsToShow}
                 resetPersonsToShow={resetPersonsToShow}
                 personsToShow={personsToShow}
-                justToDebug={justToDebug}
             />
             <ListAllPeople personsToShow={personsToShow} />
         </div>

@@ -7,17 +7,14 @@ const Filter = ({ setPersonsToShow, persons }) => {
         const newFilter = e.target.value;
         if (newFilter === "") {
             setPersonsToShow(persons);
-            console.log("setPersonsToShow just executed");
         } else {
             setPersonsToShow(
                 persons.filter(person =>
                     person.name.toUpperCase().includes(newFilter.toUpperCase())
                 )
             );
-            console.log("setPersonsToShow just executed");
         }
         setFilter(newFilter);
-        console.log("setFilter just executed");
     };
 
     return (
