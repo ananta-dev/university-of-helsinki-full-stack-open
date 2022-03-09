@@ -20,11 +20,11 @@ export default function Weather({ country }) {
             console.log("weatherData has a code");
             console.log("message: ", weatherData.message);
             return (
-                <div>
+                <>
                     The Weather API is responding:
                     <br />
                     {weatherData.message}
-                </div>
+                </>
             );
         } else {
             const iconUrl = `http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`;
