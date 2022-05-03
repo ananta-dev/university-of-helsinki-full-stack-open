@@ -1,30 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Note from "./components/Note";
+import axios from "axios";
+import noteService from "./services/notes";
 
-const App = props => {
-    const [notes, setNotes] = useState(props.notes);
+const App = () => {
+    const [notes, setNotes] = useState([]);
     const [newNote, setNewNote] = useState("Type new note here...");
     const [showAll, setShowAll] = useState(true);
 
     const notesToShow = showAll ? notes : notes.filter(note => note.important);
 
+    // prettier-ignore
+    useEffect(() => {
+        noteService
+            .getAll()
+            .then(initialNotes => {
+                setNotes(initialNotes);
+            });
+    }, []);
+
+    const toggleImportanceOf = id => {
+        const note = notes.find(n => n.id === id);
+        const changedNote = { ...note, important: !note.important };
+
+        // prettier-ignore
+        noteService
+            .update(id, changedNote).then(returnedNote => {
+                setNotes(notes.map(note => (note.id !== id ? note : returnedNote)));
+            })
+            .catch(error => {
+                alert(
+                    `the note '${note.content}' was already deleted from the server`
+                )
+                setNotes(notes.filter(n => n.id !== id))
+            })
+    };
+
     const addNote = event => {
         event.preventDefault();
-        console.log("button clicked", event.target);
-        setNotes([
-            ...notes,
-            {
-                id: notes.length + 1,
-                content: newNote,
-                date: new Date().toISOString(),
-                important: Math.random() < 0.5,
-            },
-        ]);
-        setNewNote("Type new note here...");
+        const noteObject = {
+            content: newNote,
+            date: new Date().toISOString(),
+            important: Math.random() < 0.5,
+        };
+
+        // prettier-ignore
+        noteService
+            .create(noteObject)
+            .then(returnedNote => {
+                setNotes(notes.concat(returnedNote));
+                setNewNote("");
+            });
     };
 
     const handleNoteChange = event => {
-        console.log(event.target.value);
         setNewNote(event.target.value);
     };
 
@@ -38,7 +67,11 @@ const App = props => {
             </div>
             <ul>
                 {notesToShow.map(note => (
-                    <Note key={note.id} note={note} />
+                    <Note
+                        key={note.id}
+                        note={note}
+                        toggleImportance={() => toggleImportanceOf(note.id)}
+                    />
                 ))}
             </ul>
             <form onSubmit={addNote}>
