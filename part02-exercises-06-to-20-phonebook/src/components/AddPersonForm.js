@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const AddPersonForm = ({
     persons,
@@ -20,19 +21,21 @@ const AddPersonForm = ({
         } else if (persons.some(person => person.number === newNumber)) {
             alert(`The number ${newNumber} is already in the phonebook`);
         } else {
-            const newPersonsArray = [
-                ...persons,
-                {
-                    name: newName,
-                    number: newNumber,
-                    id: 1000 + Math.floor(Math.random() * 1000000),
-                },
-            ];
-            setPersons(newPersonsArray);
-            setPersonsToShow(newPersonsArray);
-            setFilterString("");
-            setNewName("");
-            setNewNumber("");
+            const newPerson = {
+                name: newName,
+                number: newNumber,
+            };
+            axios
+                .post("http://localhost:3001/persons", newPerson)
+                .then(response => {
+                    console.log(response);
+                    const newPersonsArray = [...persons, response.data];
+                    setPersons(newPersonsArray);
+                    setPersonsToShow(newPersonsArray);
+                    setFilterString("");
+                    setNewName("");
+                    setNewNumber("");
+                });
         }
     };
 
