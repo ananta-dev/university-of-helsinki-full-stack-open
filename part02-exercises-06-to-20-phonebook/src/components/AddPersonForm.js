@@ -25,10 +25,10 @@ const AddPersonForm = ({
             ) {
                 const entryToUpdate = persons.find(p => p.name === newName);
                 const updatedEntry = { ...entryToUpdate, number: newNumber };
-                console.log("replacing phonebook Entry:", entryToUpdate);
-                console.log("New data:", updatedEntry);
+                // console.log("replacing phonebook Entry:", entryToUpdate);
+                // console.log("New data:", updatedEntry);
                 phonebookService.updateEntry(updatedEntry).then(response => {
-                    console.log("Response from updateEntry", response);
+                    // console.log("Response from updateEntry", response);
 
                     setPersons(
                         persons.map(p => {
