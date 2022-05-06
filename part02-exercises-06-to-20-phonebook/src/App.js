@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Filter from "./components/Filter";
 import AddPersonForm from "./components/AddPersonForm";
 import ListPeople from "./components/ListPeople";
-import axios from "axios";
+import phonebookService from "./services/phonebookService";
 
 const App = () => {
     const [persons, setPersons] = useState([]);
@@ -10,12 +10,11 @@ const App = () => {
     const [filterString, setFilterString] = useState("");
 
     useEffect(() => {
-        axios.get("http://localhost:3001/persons").then(response => {
+        phonebookService.getAll().then(response => {
+            // console.log("response from getAll: ", response);
             setPersons(response.data);
             setPersonsToShow(response.data);
         });
-
-        console.log("just executed axios");
     }, []);
 
     return (
@@ -30,10 +29,16 @@ const App = () => {
             <AddPersonForm
                 persons={persons}
                 setPersons={setPersons}
+                personsToShow={personsToShow}
                 setPersonsToShow={setPersonsToShow}
                 setFilterString={setFilterString}
             />
-            <ListPeople personsToShow={personsToShow} />
+            <ListPeople
+                persons={persons}
+                setPersons={setPersons}
+                personsToShow={personsToShow}
+                setPersonsToShow={setPersonsToShow}
+            />
         </div>
     );
 };

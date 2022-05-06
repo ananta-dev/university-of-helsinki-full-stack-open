@@ -1,9 +1,10 @@
 import { useState } from "react";
-import axios from "axios";
+import phonebookService from "../services/phonebookService";
 
 const AddPersonForm = ({
     persons,
     setPersons,
+    personsToShow,
     setPersonsToShow,
     setFilterString,
 }) => {
@@ -17,7 +18,37 @@ const AddPersonForm = ({
         e.preventDefault();
 
         if (persons.some(person => person.name === newName)) {
-            alert(`The name ${newName} is already in the phonebook`);
+            if (
+                window.confirm(
+                    `${newName} is already in the phonebook. Do you want to replace the old number with a new one?`
+                )
+            ) {
+                const entryToUpdate = persons.find(p => p.name === newName);
+                const updatedEntry = { ...entryToUpdate, number: newNumber };
+                console.log("replacing phonebook Entry:", entryToUpdate);
+                console.log("New data:", updatedEntry);
+                phonebookService.updateEntry(updatedEntry).then(response => {
+                    console.log("Response from updateEntry", response);
+
+                    setPersons(
+                        persons.map(p => {
+                            if (p.id === updatedEntry.id) {
+                                return { ...p, number: newNumber };
+                            }
+                            return p;
+                        })
+                    );
+
+                    setPersonsToShow(
+                        personsToShow.map(p => {
+                            if (p.id === updatedEntry.id) {
+                                return { ...p, number: newNumber };
+                            }
+                            return p;
+                        })
+                    );
+                });
+            }
         } else if (persons.some(person => person.number === newNumber)) {
             alert(`The number ${newNumber} is already in the phonebook`);
         } else {
@@ -25,17 +56,14 @@ const AddPersonForm = ({
                 name: newName,
                 number: newNumber,
             };
-            axios
-                .post("http://localhost:3001/persons", newPerson)
-                .then(response => {
-                    console.log(response);
-                    const newPersonsArray = [...persons, response.data];
-                    setPersons(newPersonsArray);
-                    setPersonsToShow(newPersonsArray);
-                    setFilterString("");
-                    setNewName("");
-                    setNewNumber("");
-                });
+            phonebookService.addEntry(newPerson).then(response => {
+                const newPersonsArray = [...persons, response.data];
+                setPersons(newPersonsArray);
+                setPersonsToShow(newPersonsArray);
+                setFilterString("");
+                setNewName("");
+                setNewNumber("");
+            });
         }
     };
 
