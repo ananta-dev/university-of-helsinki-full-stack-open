@@ -7,6 +7,8 @@ const AddPersonForm = ({
     personsToShow,
     setPersonsToShow,
     setFilterString,
+    setMessage,
+    setIsError,
 }) => {
     const NAME_PLACEHOLDER_TEXT = "Enter name here...";
     const NUMBER_PLACEHOLDER_TEXT = "Enter phone number here...";
@@ -27,27 +29,39 @@ const AddPersonForm = ({
                 const updatedEntry = { ...entryToUpdate, number: newNumber };
                 // console.log("replacing phonebook Entry:", entryToUpdate);
                 // console.log("New data:", updatedEntry);
-                phonebookService.updateEntry(updatedEntry).then(response => {
-                    // console.log("Response from updateEntry", response);
 
-                    setPersons(
-                        persons.map(p => {
-                            if (p.id === updatedEntry.id) {
-                                return { ...p, number: newNumber };
-                            }
-                            return p;
-                        })
-                    );
+                phonebookService
+                    .updateEntry(updatedEntry)
+                    .then(response => {
+                        // console.log("Response from updateEntry", response);
 
-                    setPersonsToShow(
-                        personsToShow.map(p => {
-                            if (p.id === updatedEntry.id) {
-                                return { ...p, number: newNumber };
-                            }
-                            return p;
-                        })
-                    );
-                });
+                        setPersons(
+                            persons.map(p => {
+                                if (p.id === updatedEntry.id) {
+                                    return { ...p, number: newNumber };
+                                }
+                                return p;
+                            })
+                        );
+
+                        setPersonsToShow(
+                            personsToShow.map(p => {
+                                if (p.id === updatedEntry.id) {
+                                    return { ...p, number: newNumber };
+                                }
+                                return p;
+                            })
+                        );
+                        setIsError(false);
+                        setMessage(`Updated ${newName}'s number`);
+                    })
+                    .catch(error => {
+                        // do something with error
+                        setIsError(true);
+                        setMessage(
+                            `Error while attempting to update ${newName}. Entry with name "${newName}" not found on the server. The entry may have been deleted by another user. Please refresh this page to view an updated list of phonebook entries on the server.`
+                        );
+                    });
             }
         } else if (persons.some(person => person.number === newNumber)) {
             alert(`The number ${newNumber} is already in the phonebook`);
@@ -64,6 +78,8 @@ const AddPersonForm = ({
                 setNewName("");
                 setNewNumber("");
             });
+            setIsError(false);
+            setMessage(`Added ${newName}`);
         }
     };
 
