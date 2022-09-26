@@ -1,0 +1,10 @@
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+    "content": "Why use FastAPI?",
+    "author": "Juan Guirao",
+    "url" : "https://www.freenrg.dev/",
+    "likes": "5",
+    "id": "029832910j9d109dj1201209"
+}

@@ -3,6 +3,8 @@ const Note = require('../models/note')
 
 notesRouter.get('/', (request, response) => {
     Note.find({}).then(notes => {
+        console.log({ notes })
+        console.log(JSON.stringify(notes))
         response.json(notes)
     })
 })
@@ -59,4 +61,3 @@ notesRouter.put('/:id', (request, response, next) => {
 })
 
 module.exports = notesRouter
-
