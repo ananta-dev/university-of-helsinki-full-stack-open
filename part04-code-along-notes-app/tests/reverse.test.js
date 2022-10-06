@@ -1,5 +1,11 @@
 const reverse = require('../utils/for_testing').reverse
 
+test('reverse of empty string', () => {
+    const result = reverse('')
+
+    expect(result).toBe('')
+})
+
 test('reverse of a', () => {
     const result = reverse('a')
 
